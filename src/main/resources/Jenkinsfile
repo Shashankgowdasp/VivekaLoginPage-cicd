@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clone the repository
+                git 'https://github.com/Shashankgowdasp/VivekaLoginPage-cicd.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                // Build Docker image
+                sh 'docker build -t userscreen:1.0 .'
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                // Run Docker container
+                sh 'docker run -d --name userscreen-container -p 8080:10002 userscreen:1.0'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Docker container is running successfully!'
+        }
+        failure {
+            echo 'Build or Deployment failed!'
+        }
+    }
+}
