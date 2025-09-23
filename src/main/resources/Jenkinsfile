@@ -4,32 +4,35 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Clone the repository
+                // Pull your HTML code from GitHub
                 git 'https://github.com/Shashankgowdasp/VivekaLoginPage-cicd.git'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
-                // Build Docker image
-                sh 'docker build -t userscreen:1.0 .'
+                echo 'No build required for static HTML. Preparing files...'
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Deploy') {
             steps {
-                // Run Docker container
-                sh 'docker run -d --name userscreen-container -p 8080:10002 userscreen:1.0'
+                echo 'Deploying to web folder...'
+                // Replace C:\inetpub\wwwroot with your web server path
+                bat '''
+                    xcopy * "C:\\inetpub\\wwwroot\\VivekaLoginPage" /E /H /C /I /Y
+                '''
             }
         }
     }
 
     post {
         success {
-            echo 'Docker container is running successfully!'
+            echo 'Deployment successful! Your site should be live.'
         }
         failure {
-            echo 'Build or Deployment failed!'
+            echo 'Build or deployment failed!'
         }
     }
 }
+
