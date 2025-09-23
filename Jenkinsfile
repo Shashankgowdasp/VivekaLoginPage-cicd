@@ -21,7 +21,7 @@ pipeline {
         stage('Deploy') {
   steps {
     bat 'if not exist "C:\\DevOpsVivekaDeploy" mkdir "C:\\DevOpsVivekaDeploy"'
-    bat 'xcopy "%WORKSPACE%\\*.*" "C:\\VivekaDeploy\\" /E /I /Y /EXCLUDE:"%WORKSPACE%\\deploy"'
+    bat 'xcopy "%WORKSPACE%\\*.*" "C:\\DevOpsVivekaDeploy\\" /E /I /Y /EXCLUDE:"%WORKSPACE%\\deploy"'
   }
 }
 
