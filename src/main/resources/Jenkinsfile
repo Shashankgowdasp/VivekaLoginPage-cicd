@@ -1,38 +1,15 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('Checkout') {
-            steps {
-                // Pull your HTML code from GitHub
-                git 'https://github.com/Shashankgowdasp/VivekaLoginPage-cicd.git'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                echo 'No build required for static HTML. Preparing files...'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying to web folder...'
-                // Replace C:\inetpub\wwwroot with your web server path
-                bat '''
-                    xcopy * "C:\\inetpub\\wwwroot\\VivekaLoginPage" /E /H /C /I /Y
-                '''
-            }
-        }
+  agent any
+  stages {
+    stage('Checkout') {
+      steps {
+        git branch: 'main',
+            credentialsId: 'github-creds',   // must match the ID you set
+            url: 'https://github.com/Shashankgowdasp/VivekaLoginPage-cicd.git'
+      }
     }
-
-    post {
-        success {
-            echo 'Deployment successful! Your site should be live.'
-        }
-        failure {
-            echo 'Build or deployment failed!'
-        }
-    }
+    // other stages...
+  }
 }
+
 
