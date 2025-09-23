@@ -9,5 +9,6 @@ public class ShashajarApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShashajarApplication.class, args);
 	}
+	// good
 
 }
