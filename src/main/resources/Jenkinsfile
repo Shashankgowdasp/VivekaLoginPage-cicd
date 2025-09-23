@@ -3,13 +3,29 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git branch: 'main',
-            credentialsId: 'github-creds',   // must match the ID you set
-            url: 'https://github.com/Shashankgowdasp/VivekaLoginPage-cicd.git'
+        // if Jenkinsfile is already fetched via job SCM, this checkout can be redundant
+        git url: 'https://github.com/Shashankgowdasp/VivekaLoginPage-cicd.git',
+            credentialsId: 'github-creds',
+            branch: 'master'
       }
     }
-    // other stages...
+    stage('Build') {
+      steps {
+        echo "Static HTML project - no build step required"
+      }
+    }
+    stage('Deploy') {
+      steps {
+        // Windows agent example; change to sh for Linux agent
+        bat 'mkdir "%WORKSPACE%\\deploy"'
+        bat 'xcopy "%WORKSPACE%\\*.*" "%WORKSPACE%\\deploy\\" /E /I /Y'
+      }
+    }
+  }
+  post {
+    always { cleanWs() }
   }
 }
+
 
 
