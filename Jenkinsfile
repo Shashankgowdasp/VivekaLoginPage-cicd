@@ -19,14 +19,12 @@ pipeline {
         }
 
         stage('Deploy') {
-            steps {
-                // Deploy files to a deploy folder within workspace
-                bat '''
-                    if not exist "%WORKSPACE%\\deploy" mkdir "%WORKSPACE%\\deploy"
-                    xcopy "%WORKSPACE%\\*.*" "%WORKSPACE%\\deploy\\" /E /I /Y
-                '''
-            }
-        }
+  steps {
+    bat 'if not exist "C:\\DevOpsVivekaDeploy" mkdir "C:\\DevOpsVivekaDeploy"'
+    bat 'xcopy "%WORKSPACE%\\*.*" "C:\\VivekaDeploy\\" /E /I /Y /EXCLUDE:"%WORKSPACE%\\deploy"'
+  }
+}
+
     }
 
     post {
